@@ -8,6 +8,7 @@ __pycache__/
 
 # Folders to ignore
 ./Data
+sys
 
 # Distribution / packaging
 .Python
