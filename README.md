@@ -11,3 +11,14 @@ A project exploring `Cross Modal Representation Learning` - for retrieval and al
 6. Now install your packages in `requirements.txt`
 
  
+ # TASKS
+ 
+ a. Video-text Alignment of youtube-2 dataset.
+ 
+ Approach/Plan:
+ 
+ Try something similar to [Zhou et al](https://arxiv.org/abs/1703.09788) but using modern architectures(transformers). 
+ 
+ Problems/Issues:
+ 
+ Unfortunately their implementation is in [LUA](https://github.com/LuoweiZhou/ProcNets-YouCook2).
