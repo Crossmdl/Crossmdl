@@ -36,5 +36,24 @@ Given a video and a text-token output should have [(center(0,1->scale invariant)
 
 Note that here the output's (location) of sentences are non-overlapping. It would be better to have a penalty during training to have the output regions non-overlapping. Can penalize by the (intersection/total_length) of proposed intervals.
 
+# Paper Summary
+
+### Multi-modal Transformer for Video Retrieval
+
+Input : only text narration but no time-annotation.
+
+`Multi-modal Transformer for Video Retrieval`
+
+Self-attention(with modality encoding) to aggregate multimodal information.[1](https://www.mendeley.com/reference-manager/reader/e6e62e7a-8730-3088-8513-a3b9598b8d39/42c48f26-4c32-9f83-7639-3e4e646df76b). They trained on video-text simililarity.Their [code](https://github.com/gabeur/mmt). Another approach is using Cross-attention as in [2](https://www.mendeley.com/reference-manager/reader/3c914788-db70-3233-ab06-820dc11c4254/5d7262e4-013b-9be1-1b0f-328b4ab4b7eb),[Code - easy and readable](https://github.com/yaohungt/Multimodal-Transformer/tree/a670936824ee722c8494fd98d204977a1d663c7a).  
+
+Summary:
+
+<img width="700" alt="Screen Shot 2022-03-11 at 9 59 00 PM" src="https://user-images.githubusercontent.com/21222766/158001266-130779b7-b81c-4b8b-9568-47e25fb2f528.png">
+
+<img width="700" alt="Screen Shot 2022-03-11 at 9 59 15 PM" src="https://user-images.githubusercontent.com/21222766/158001272-4dd338a6-01c4-4b01-a88a-a99ab7beabef.png">
+
+
+Can we use pretarining ?
+
 
 
