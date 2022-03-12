@@ -68,5 +68,7 @@ Video-Grounded Dialogue Systems](https://piazza.com/class_profile/get_resource/k
 5.Cross-Modality Relevance for Reasoning on Language and Vision(https://arxiv.org/abs/2005.06035)
 
 
+************
+PYTORCH LIGHTNING AND Deep Learning [tutorial series](https://uvadlc-notebooks.readthedocs.io/en/latest/)
 
 
