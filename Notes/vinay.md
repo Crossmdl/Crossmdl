@@ -65,6 +65,7 @@ from Transformers](https://piazza.com/class_profile/get_resource/kcnr11wq24q6z7/
 4.[Multimodal Transformer Networks for End-to-End
 Video-Grounded Dialogue Systems](https://piazza.com/class_profile/get_resource/kcnr11wq24q6z7/kfmv97aseti6i1)
 
+5.Cross-Modality Relevance for Reasoning on Language and Vision(https://arxiv.org/abs/2005.06035)
 
 
 
