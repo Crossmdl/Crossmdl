@@ -30,13 +30,13 @@ b. But potential text-sentences are varied.(with atmost the video length,thus ea
 
 `Modeling`
 
-[Approach 1](https://arxiv.org/abs/1803.00057):
+[Approach 1](https://arxiv.org/abs/1803.00057): Baseline
 
 Given a video and a text-token output should have [(center(0,1->scale invariant),width),can have different parametrizations.],label = 0,1(to indicate if whether that sentence belongs to the video or not).
 
 Note that here the output's (location) of sentences are non-overlapping. It would be better to have a penalty during training to have the output regions non-overlapping. Can penalize by the (intersection/total_length) of proposed intervals.
 
-# Paper Summary
+# Approach 2(adapt from the following)
 
 ### Multi-modal Transformer for Video Retrieval(MMT)
 
