@@ -53,6 +53,14 @@ Summary:
 <img width="700" alt="Screen Shot 2022-03-11 at 9 59 15 PM" src="https://user-images.githubusercontent.com/21222766/158001272-4dd338a6-01c4-4b01-a88a-a99ab7beabef.png">
 
 
+
+[Learning a Text-Video Embedding from Incomplete and Heterogeneous Data](https://arxiv.org/abs/1804.02516)
+
+This paper is important. Read.
+
+
+
+
 Can we use pretarining ?(further paper suggestions)
 
 1.[Integrating Multimodal Information in Large Pretrained Transformers](https://arxiv.org/pdf/1908.05787.pdf)
