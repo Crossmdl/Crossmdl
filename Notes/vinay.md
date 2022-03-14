@@ -2,6 +2,8 @@
 
 The Option 2 task requires aligning text with instructional videos. 
 
+`CURRENT THOUGTS`: Use features extraction similar to DROP-DTW for both video and text.(as it's trained to optimize text-video similarity). Now formulate the problem as aligning video-text pairs. Now Youcook2 also has acoustic data. Try to utilize it(multimodal transformer etc).
+
 Some useful resources:
 
 [Overview of object detection literature](https://www.youtube.com/watch?v=her4_rzx09o)
