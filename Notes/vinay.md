@@ -57,7 +57,8 @@ Can we use pretarining ?(further paper suggestions)
 
 1.[Integrating Multimodal Information in Large Pretrained Transformers](https://arxiv.org/pdf/1908.05787.pdf)
 
-Just modify the input embedding vectors of text based on other modalities.
+
+Just modify the input embedding vectors of text based on other modalities.Comment: Check their code to see how they adapted BERT.
 
 <img width="432" alt="Screen Shot 2022-03-13 at 10 14 20 PM" src="https://user-images.githubusercontent.com/21222766/158093352-16d6bacf-5199-4bf4-a32f-aad36b6892a7.png">
 
