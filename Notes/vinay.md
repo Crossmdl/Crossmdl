@@ -28,6 +28,36 @@ a. The input video length is fixed.(we sample the video to fixed frames say 512)
 
 b. But potential text-sentences are varied.(with atmost the video length,thus each frame correponding to a different text token)
 
+
+`Formulation 2`:
+From the training videos, we
+find that 7 temporal window lengths typically exist: 25, 60,
+78, 100, 150, 190 and 250 frames. We then fix a sliding
+step size of 10 frames. Finally, we perform non-maximum
+suppression to ignore overlapping detection windows.
+
+by computing similarity be-tween every frame in the video and the action label namesof CrossTask.
+
+
+`metrics`
+mAP score over all activity classes. To do
+this, a detection is determined to be a true positive according to the following procedure: 1) we compute the overlap
+(measured by the intersection over union score) between a
+predicted temporal segment and a ground truth segment, 2)
+we mark the detection as positive if the overlap is greater
+than a threshold ↵. In practice, we vary the threshold ↵
+between 0.1 and 0.5.
+
+We evaluate our learned embedding using the stan-dard recall metrics R@1, R@5, R@10 and the median rank(Median R).
+
+Drop-DTW Paper used the pretrained [Youtube100M dataset](chrome-extension://dagcmkpagjlhakfdhnbomgmjdpkdklff/enhanced-reader.html?openApp&pdf=https%3A%2F%2Farxiv.org%2Fpdf%2F1912.06430.pdf)
+
+[code/weights](https://github.com/antoine77340/S3D_HowTo100M)
+
+Also the [Drop-DTW paper code](https://github.com/SamsungLabs/Drop-DTW/tree/64a64dff20ee8b3cfdb7edb3e793a5a265af25fd)
+
+
+
 `Modeling`
 
 [Approach 1](https://arxiv.org/abs/1803.00057): Baseline
