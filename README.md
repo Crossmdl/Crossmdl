@@ -22,3 +22,20 @@ A project exploring `Cross Modal Representation Learning` - for retrieval and al
  Problems/Issues:
  
  Unfortunately their implementation is in [LUA](https://github.com/LuoweiZhou/ProcNets-YouCook2).
+
+## ScratchPad
+
+a. Loss-function -> MSE on the boundary looks fine.
+b. Input-> text-segment,video-frames: It makes sense to finetune the embeddings of each word. Maybe have an average of each-word's embeddings initialized with BERT/other similar pre-trained ones. (fixed embeddings does'nt let generalization over similar sentences(beyond what's already encoded). Moreover order of words might also matter,thus include position encoding here too before taking average.
+
+
+## TODO
+
+Write/clean codebase to run hyperparam tuning,experiment tracking etc.
+
+Check the code to include position encoding.(i missed this previously)
+
+Quickly get an estimate of max-perf with video frames fixed(using pretrained features)
+
+Focus on what you can visualize,feedback -> think how you would know that video side needs to be improved.
+
