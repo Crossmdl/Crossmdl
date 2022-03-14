@@ -57,6 +57,15 @@ Can we use pretarining ?(further paper suggestions)
 
 1.[Integrating Multimodal Information in Large Pretrained Transformers](https://arxiv.org/pdf/1908.05787.pdf)
 
+Just modify the input embedding vectors of text based on other modalities.
+
+<img width="432" alt="Screen Shot 2022-03-13 at 10 14 20 PM" src="https://user-images.githubusercontent.com/21222766/158093352-16d6bacf-5199-4bf4-a32f-aad36b6892a7.png">
+
+<img width="416" alt="Screen Shot 2022-03-13 at 10 14 44 PM" src="https://user-images.githubusercontent.com/21222766/158093372-029848e8-79cb-4f11-8fb4-92b721787a01.png">
+
+<img width="469" alt="Screen Shot 2022-03-13 at 10 15 11 PM" src="https://user-images.githubusercontent.com/21222766/158093385-23369c26-ab83-4942-9285-59c1e479a582.png">
+
+
 2.[VLBERT](https://arxiv.org/pdf/1908.08530.pdf) - similar to MMT but they released their pretrained model. You can finetune.
 
 3.[LXMERT: Learning Cross-Modality Encoder Representations
