@@ -1,7 +1,0 @@
-edim: 100
-attnhdim: 50
-nheads: 10
-wrdim: 768
-vidim: 512
-hdim: 30
-dropoutp: 0.0
