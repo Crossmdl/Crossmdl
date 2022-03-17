@@ -2,6 +2,8 @@
 
 The Option 2 task requires aligning text with instructional videos. 
 
+`CURRENT THOUGTS`: Use features extraction similar to DROP-DTW for both video and text.(as it's trained to optimize text-video similarity). Now formulate the problem as aligning video-text pairs. Now Youcook2 also has acoustic data. Try to utilize it(multimodal transformer etc).
+
 Some useful resources:
 
 [Overview of object detection literature](https://www.youtube.com/watch?v=her4_rzx09o)
@@ -28,6 +30,36 @@ a. The input video length is fixed.(we sample the video to fixed frames say 512)
 
 b. But potential text-sentences are varied.(with atmost the video length,thus each frame correponding to a different text token)
 
+
+`Formulation 2`:
+From the training videos, we
+find that 7 temporal window lengths typically exist: 25, 60,
+78, 100, 150, 190 and 250 frames. We then fix a sliding
+step size of 10 frames. Finally, we perform non-maximum
+suppression to ignore overlapping detection windows.
+
+by computing similarity be-tween every frame in the video and the action label namesof CrossTask.
+
+
+`metrics`
+mAP score over all activity classes. To do
+this, a detection is determined to be a true positive according to the following procedure: 1) we compute the overlap
+(measured by the intersection over union score) between a
+predicted temporal segment and a ground truth segment, 2)
+we mark the detection as positive if the overlap is greater
+than a threshold ↵. In practice, we vary the threshold ↵
+between 0.1 and 0.5.
+
+We evaluate our learned embedding using the stan-dard recall metrics R@1, R@5, R@10 and the median rank(Median R).
+
+Drop-DTW Paper used the pretrained [Youtube100M dataset](chrome-extension://dagcmkpagjlhakfdhnbomgmjdpkdklff/enhanced-reader.html?openApp&pdf=https%3A%2F%2Farxiv.org%2Fpdf%2F1912.06430.pdf)
+
+[code/weights](https://github.com/antoine77340/S3D_HowTo100M)
+
+Also the [Drop-DTW paper code](https://github.com/SamsungLabs/Drop-DTW/tree/64a64dff20ee8b3cfdb7edb3e793a5a265af25fd)
+
+
+
 `Modeling`
 
 [Approach 1](https://arxiv.org/abs/1803.00057): Baseline
@@ -53,9 +85,27 @@ Summary:
 <img width="700" alt="Screen Shot 2022-03-11 at 9 59 15 PM" src="https://user-images.githubusercontent.com/21222766/158001272-4dd338a6-01c4-4b01-a88a-a99ab7beabef.png">
 
 
+
+[Learning a Text-Video Embedding from Incomplete and Heterogeneous Data](https://arxiv.org/abs/1804.02516)
+
+This paper is important. Read.
+
+
+
+
 Can we use pretarining ?(further paper suggestions)
 
 1.[Integrating Multimodal Information in Large Pretrained Transformers](https://arxiv.org/pdf/1908.05787.pdf)
+
+
+Just modify the input embedding vectors of text based on other modalities.Comment: Check their code to see how they adapted BERT.
+
+<img width="432" alt="Screen Shot 2022-03-13 at 10 14 20 PM" src="https://user-images.githubusercontent.com/21222766/158093352-16d6bacf-5199-4bf4-a32f-aad36b6892a7.png">
+
+<img width="416" alt="Screen Shot 2022-03-13 at 10 14 44 PM" src="https://user-images.githubusercontent.com/21222766/158093372-029848e8-79cb-4f11-8fb4-92b721787a01.png">
+
+<img width="469" alt="Screen Shot 2022-03-13 at 10 15 11 PM" src="https://user-images.githubusercontent.com/21222766/158093385-23369c26-ab83-4942-9285-59c1e479a582.png">
+
 
 2.[VLBERT](https://arxiv.org/pdf/1908.08530.pdf) - similar to MMT but they released their pretrained model. You can finetune.
 
