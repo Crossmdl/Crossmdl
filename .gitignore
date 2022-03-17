@@ -8,6 +8,7 @@ __pycache__/
 
 # Folders to ignore
 ./Data
+./nbs/lightning_logs/
 sys
 
 # Distribution / packaging
