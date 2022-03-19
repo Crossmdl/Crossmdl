@@ -95,20 +95,22 @@ This paper is important. Read.
 # Final Game plan
 
 Step `1`:
-Train a binary loss upon each element of sequence (frame -> dorp or not, 1 extra output to tell if it belongs to it or not). `Input`: N frame + 1 text embedding . `Output`: N(drop the frame or keep it)+1(whether text belongs/or not) outputs (crossmodal attention). 1 extra output can just be the average of `N` from CroAtn. Make a 50-50 split for negative samples.
+
+- Train a binary loss upon each element of sequence (frame -> dorp or not, 1 extra output to tell if it belongs to it or not). `Input`: N frame + 1 text embedding . `Output`: N(drop the frame or keep it)+1(whether text belongs/or not) outputs (crossmodal attention). 1 extra output can just be the average of `N` from CroAtn. Make a 50-50 split for negative samples.
+
+- Now extract Audio features and add them to the features.
 
 
 Step `2`:
 
-Try Dropdtw finetuning.
-
-Give output pro
+Try Dropdtw finetuning as in the paper.
 
 
 
 
 
-Can we use pretarining ?(further paper suggestions)
+
+# Can we use pretarining ?(further paper suggestions)
 
 1.[Integrating Multimodal Information in Large Pretrained Transformers](https://arxiv.org/pdf/1908.05787.pdf)
 
