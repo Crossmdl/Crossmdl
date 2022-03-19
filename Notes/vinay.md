@@ -1,5 +1,12 @@
 # Cross Modal Retrieval and Alignment.
 
+
+`ASIDE`: VISION AND LANGUAGE MODELS -> FAIL(MULTIMODAL)
+1. https://arxiv.org/pdf/1903.08678.pdf
+2. https://arxiv.org/abs/2012.12352
+
+
+
 The Option 2 task requires aligning text with instructional videos. 
 
 `CURRENT THOUGTS`: Use features extraction similar to DROP-DTW for both video and text.(as it's trained to optimize text-video similarity). Now formulate the problem as aligning video-text pairs. Now Youcook2 also has acoustic data. Try to utilize it(multimodal transformer etc).
