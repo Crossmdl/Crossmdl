@@ -5,6 +5,9 @@
 1. https://arxiv.org/pdf/1903.08678.pdf
 2. https://arxiv.org/abs/2012.12352
 
+pROBLEMS:
+1. https://arxiv.org/pdf/1805.07616.pdf
+
 
 
 The Option 2 task requires aligning text with instructional videos. 
