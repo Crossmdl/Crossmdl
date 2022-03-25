@@ -64,7 +64,8 @@ We evaluate our learned embedding using the stan-dard recall metrics R@1, R@5, R
 
 Drop-DTW Paper used the pretrained [Youtube100M dataset](chrome-extension://dagcmkpagjlhakfdhnbomgmjdpkdklff/enhanced-reader.html?openApp&pdf=https%3A%2F%2Farxiv.org%2Fpdf%2F1912.06430.pdf)
 
-[code/weights](https://github.com/antoine77340/S3D_HowTo100M)
+[code/weights for using pretrained model](https://github.com/antoine77340/S3D_HowTo100M)
+[Extracting frames from youcook2](https://github.com/antoine77340/MIL-NCE_HowTo100M/blob/master/video_loader.py)
 
 Also the [Drop-DTW paper code](https://github.com/SamsungLabs/Drop-DTW/tree/64a64dff20ee8b3cfdb7edb3e793a5a265af25fd)
 
