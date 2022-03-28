@@ -1,5 +1,15 @@
 # Cross Modal Retrieval and Alignment.
 
+
+`ASIDE`: VISION AND LANGUAGE MODELS -> FAIL(MULTIMODAL)
+1. https://arxiv.org/pdf/1903.08678.pdf
+2. https://arxiv.org/abs/2012.12352
+
+pROBLEMS:
+1. https://arxiv.org/pdf/1805.07616.pdf
+
+
+
 The Option 2 task requires aligning text with instructional videos. 
 
 `CURRENT THOUGTS`: Use features extraction similar to DROP-DTW for both video and text.(as it's trained to optimize text-video similarity). Now formulate the problem as aligning video-text pairs. Now Youcook2 also has acoustic data. Try to utilize it(multimodal transformer etc).
@@ -54,7 +64,8 @@ We evaluate our learned embedding using the stan-dard recall metrics R@1, R@5, R
 
 Drop-DTW Paper used the pretrained [Youtube100M dataset](chrome-extension://dagcmkpagjlhakfdhnbomgmjdpkdklff/enhanced-reader.html?openApp&pdf=https%3A%2F%2Farxiv.org%2Fpdf%2F1912.06430.pdf)
 
-[code/weights](https://github.com/antoine77340/S3D_HowTo100M)
+[code/weights for using pretrained model](https://github.com/antoine77340/S3D_HowTo100M)
+[Extracting frames from youcook2](https://github.com/antoine77340/MIL-NCE_HowTo100M/blob/master/video_loader.py)
 
 Also the [Drop-DTW paper code](https://github.com/SamsungLabs/Drop-DTW/tree/64a64dff20ee8b3cfdb7edb3e793a5a265af25fd)
 
@@ -92,8 +103,25 @@ This paper is important. Read.
 
 
 
+# Final Game plan
 
-Can we use pretarining ?(further paper suggestions)
+Step `1`:
+
+- Train a binary loss upon each element of sequence (frame -> dorp or not, 1 extra output to tell if it belongs to it or not). `Input`: N frame + 1 text embedding . `Output`: N(drop the frame or keep it)+1(whether text belongs/or not) outputs (crossmodal attention). 1 extra output can just be the average of `N` from CroAtn. Make a 50-50 split for negative samples.
+
+- Now extract Audio features and add them to the features.
+
+
+Step `2`:
+
+Try Dropdtw finetuning as in the paper.
+
+
+
+
+
+
+# Can we use pretarining ?(further paper suggestions)
 
 1.[Integrating Multimodal Information in Large Pretrained Transformers](https://arxiv.org/pdf/1908.05787.pdf)
 
