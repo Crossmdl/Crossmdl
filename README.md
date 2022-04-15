@@ -39,3 +39,5 @@ Quickly get an estimate of max-perf with video frames fixed(using pretrained fea
 
 Focus on what you can visualize,feedback -> think how you would know that video side needs to be improved.
 
+Modify Multihead attention by changing the key = f(input,text_encoding).
+
