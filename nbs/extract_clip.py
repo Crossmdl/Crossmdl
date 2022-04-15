@@ -20,7 +20,7 @@ from argparse import Namespace
 from numpy import genfromtxt
 import os
 from torch.optim.lr_scheduler import ReduceLROnPlateau
-
+from tqdm import tqdm
 import pytorch_lightning as pl
 import wandb
 import logging
@@ -103,7 +103,7 @@ annotns_file='/common/home/vk405/Projects/Crossmdl/Data/YouCookII/annotations/yo
     model,preprocess = clip.load(model_name)
     model.eval().cuda()
     error_cnt = {}
-    for vidloc in useful_vids:
+    for vidloc in tqdm(useful_vids):
         vid_id = vidloc.split('/')[-2]
         save_loc_vid = store_dir+split+'/'+f'vid_{vid_id}.joblib'
         save_loc_text = store_dir+split+'/'+f'txt_{vid_id}.joblib'
