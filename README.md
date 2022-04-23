@@ -41,3 +41,10 @@ Focus on what you can visualize,feedback -> think how you would know that video 
 
 Modify Multihead attention by changing the key = f(input,text_encoding).
 
+## CRF tutorials
+
+https://www.youtube.com/watch?v=5rZvUpd-4Kk
+
+https://github.com/mtreviso/linear-chain-crf
+
+
