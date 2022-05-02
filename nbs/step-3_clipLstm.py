@@ -210,13 +210,12 @@ class Dset(Dataset):
             else:missing.append(id)
         print(f"missing:{missing}")
         return finids,sents
-
 class ClipLstm(pl.LightningModule):
     
     def __init__(self,hparams):
         super().__init__()
         self.save_hyperparameters(hparams)
-        self.vid_encoder,self.text_encoder,self.finlin = self.get_nets(**hparams.network_params)
+        self.vid_encoder,self.text_encoder,self.finlin = self.get_nets(**self.hparams.network_params)
         
     def get_nets(self,bidirectional = True,vid_lyrs = 2,vid_hidim=64,vid_fsz=64\
         ,txt_lyrs=2,txt_fsz=64,act='Relu'):
@@ -240,13 +239,39 @@ class ClipLstm(pl.LightningModule):
 
 
     def forward(self,vid,txt):
+        # modeling end = st+diff(positive/sigmoid)
         #fixing for now
         #torch.squeeze(self.start(self.shared(input)))
         lstm,act,lin = self.vid_encoder
         hiddens, (final_h, final_c) = lstm(vid.float())
         vid_out = lin(act(torch.mean(final_h,dim=0)))
         txt_out = self.text_encoder(txt.float())
-        return self.finlin(vid_out+txt_out)
+        preds = torch.sigmoid(self.finlin(vid_out+txt_out))
+        st_p = preds[:,0]
+        diff = preds[:,-1]
+        fin_pred = torch.stack([st_p,st_p+diff],-1)
+        return fin_pred
+
+    def giou(self,p,g):
+        x1_p,_ = torch.min(p,1)
+        x2_p,_ = torch.max(p,1)
+
+        x1_g,_ = torch.min(g,1)
+        x2_g,_ = torch.max(g,1)
+
+        x_1_i,_ =  torch.max(torch.stack([x1_g,x1_p],1),1)
+        x_2_i,_ = torch.min(torch.stack([x2_g,x2_p],1),1)
+
+        x_1_c,_ = torch.min(torch.stack([x1_p,x1_g],1),1)
+        x_2_c,_ = torch.max(torch.stack([x2_p,x2_g],1),1)
+
+        I = x_2_i - x_1_i
+        U = (x2_p-x1_p) + (x2_g-x1_g) - I
+        AC = x_2_c-x_1_c
+
+        return (I/U) - ((AC-U)/AC),(I/U)
+
+
         
     def training_step(self,batch,batch_idx):
 
@@ -257,21 +282,29 @@ class ClipLstm(pl.LightningModule):
         hiddens, (final_h, final_c) = lstm(vid.float())
         vid_out = lin(act(torch.mean(final_h,dim=0)))
         txt_out = self.text_encoder(txt.float())
-        preds = self.finlin(vid_out+txt_out)
+        preds = torch.sigmoid(self.finlin(vid_out+txt_out))
+        st_p = preds[:,0]
+        diff = preds[:,-1]
+        fin_preds = torch.stack([st_p,st_p+diff],-1)
 
 
+        grounds = torch.stack([torch.squeeze(st),torch.squeeze(end)],1)
+        giou,iou = self.giou(fin_preds,grounds)
+        loss = torch.mean(-1*giou)
         #preds = self(vid,txt)
-        st_loss = loss_fn(preds[:,0].float(),torch.squeeze(st).float())
-        end_loss = loss_fn(preds[:,1].float(),torch.squeeze(end).float())
+        #st_loss = loss_fn(preds[:,0].float(),torch.squeeze(st).float())
+        #end_loss = loss_fn(preds[:,1].float(),torch.squeeze(end).float())
         #loss_end = nn.CrossEntropyLoss()
         #import pdb;pdb.set_trace()
         #st_l = loss_st(torch.squeeze(self.start(self.shared(input))).float(),st.float())
         #end_l = loss_st(torch.squeeze(self.end(self.shared(input))).float(),end.float())
-        loss = st_loss + end_loss
+        #loss = st_loss + end_loss
         self.log("train_loss",loss,on_step=True)
+        self.log("train_iou",torch.mean(iou),on_step=True)
         return loss
 
     def validation_step(self,batch,batch_idx):
+
 
         vid,txt,st,end = batch
         loss_fn = nn.MSELoss()
@@ -280,17 +313,26 @@ class ClipLstm(pl.LightningModule):
         hiddens, (final_h, final_c) = lstm(vid.float())
         vid_out = lin(act(torch.mean(final_h,dim=0)))
         txt_out = self.text_encoder(txt.float())
-        preds = self.finlin(vid_out+txt_out)
+        preds = torch.sigmoid(self.finlin(vid_out+txt_out))
+        st_p = preds[:,0]
+        diff = preds[:,-1]
+        fin_preds = torch.stack([st_p,st_p+diff],-1)
 
+        grounds = torch.stack([torch.squeeze(st),torch.squeeze(end)],1)
+        giou,iou = self.giou(fin_preds,grounds)
+        loss = torch.mean(-1*giou)
+        #loss = torch.mean(-1*self.giou(preds,grounds))
         #preds = self(vid,txt)
-        st_loss = loss_fn(preds[:,0].float(),torch.squeeze(st).float())
-        end_loss = loss_fn(preds[:,1].float(),torch.squeeze(end).float())
+        #st_loss = loss_fn(preds[:,0].float(),torch.squeeze(st).float())
+        #end_loss = loss_fn(preds[:,1].float(),torch.squeeze(end).float())
         #loss_end = nn.CrossEntropyLoss()
         #import pdb;pdb.set_trace()
         #st_l = loss_st(torch.squeeze(self.start(self.shared(input))).float(),st.float())
         #end_l = loss_st(torch.squeeze(self.end(self.shared(input))).float(),end.float())
-        loss = st_loss + end_loss
-        self.log("val_loss",loss,on_step=True, on_epoch=True)
+        #loss = st_loss + end_loss
+        self.log("val_loss",loss,on_step=False,on_epoch=True)
+        self.log("val_iou",torch.mean(iou),on_step=False,on_epoch=True)
+
         return loss
         
     def configure_optimizers(self):
@@ -299,12 +341,16 @@ class ClipLstm(pl.LightningModule):
         return optimizer
 
 
+        
+
+
 from argparse import Namespace
 FEAT_DIR = pathlib.Path('/common/users/vk405/CLIP_FEAT')
 RAWFRAME_DIR = pathlib.Path('/common/users/vk405/Youcook/')
-
+#early_stop
 cfg = Namespace(
-    version = 'clip_lstm',
+    version = 'clip_lstm_retrain',
+    retrain= True,
     id = 0,
     FEAT_DIR = FEAT_DIR,
     RAWFRAME_DIR = RAWFRAME_DIR,
@@ -318,11 +364,11 @@ cfg = Namespace(
     network_params = {'bidirectional':True,'vid_lyrs':2,\
         'vid_hidim':64,'vid_fsz':64\
         ,'txt_lyrs':2,'txt_fsz':64,'act':'Relu'},
-    cbs = ["checkpoint","early_stop"],
+    cbs = ["checkpoint"],
     trainer = {'log_every_n_steps': 1,
-    'max_epochs': 40},
+    'max_epochs': 150},
     checkpoint = {"every_n_epochs": 1,
-    "monitor": "val_loss"},
+    "monitor": "train_loss"},
     early_stop = {"monitor":"val_loss","mode":"min","patience":5},
     lr = 1e-4
 
@@ -347,7 +393,7 @@ def run(cfg):
             os.makedirs(store_path)
         fname = "{epoch}-{train_loss:.2f}"
         params = cfg.checkpoint
-        checkptcb = ModelCheckpoint(**params, dirpath=store_path, filename=fname)
+        checkptcb = ModelCheckpoint(**params, dirpath=store_path, filename=fname,save_top_k=3)
         cbs.append(checkptcb)
 
     #wandb.init(project="videoretrieval", config=cfg)
@@ -360,8 +406,15 @@ def run(cfg):
         vall = DataLoader(valdset,batch_size=64)
         hparams = cfg    
         net = ClipLstm(hparams)
+        if cfg.retrain:
+            from pathlib import Path
+            load_from = '_'.join(cfg.version.split('_')[:-1])
+            PATH = Path(cfg.artifacts_loc)/'ckpts'/cfg.version
+            ckpt = os.listdir(PATH)[0]
+            print(f'{ckpt}')
+            net = net.load_from_checkpoint(checkpoint_path=str(PATH/ckpt))
         trainer = pl.Trainer(
-            logger=logger_list,callbacks=cbs,accelerator='gpu',decives=[0],deterministic=True, **cfg.trainer
+            logger=logger_list,callbacks=cbs,accelerator='gpu',devices=[4],deterministic=True, **cfg.trainer
         )
         trainer.fit(net, trnl,vall)
         return trainer
