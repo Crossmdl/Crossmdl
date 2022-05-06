@@ -10,6 +10,11 @@ A project exploring `Cross Modal Representation Learning` - for retrieval and al
 5. Manually install torch specific to env - `pip3 install torch==1.10.2+cu113 torchvision==0.11.3+cu113 torchaudio==0.10.2+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html`
 6. Now install your packages in `requirements.txt`
 
+
+# Code Location
+
+All the code for STEP-3 is inside **nbs** folder with .ipynb files appropriately titled with `step-3-**.ipynb`. Corresponding scripts are also provided there.
+
  
  # TASKS
  
